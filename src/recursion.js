@@ -242,6 +242,14 @@ var gcd = function(x, y) {
 // compareStr('house', 'houses') // false
 // compareStr('tomato', 'tomato') // true
 var compareStr = function(str1, str2) {
+  if (str1.charAt(0) === str2.charAt(0)) {
+    if (str1.length > 0) {
+      return compareStr(str1.substr(1), str2.substr(1));
+    }
+    return true;
+  } else {
+    return false;
+  }
 };
 
 // 16. Write a function that accepts a string and creates an array where each letter
