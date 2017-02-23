@@ -367,6 +367,22 @@ var countValuesInObj = function(obj, value) {
 // 24. Find all keys in an object (and nested objects) by a provided name and rename
 // them to a provided new name while preserving the value stored at that key.
 var replaceKeysInObj = function(obj, oldKey, newKey) {
+  for (key in obj) {
+    var newVal;
+    if (typeof obj[key] === 'object') {
+      if (key === oldKey) {
+        obj[newKey] = replaceKeysInObj(obj[key], oldKey, newKey);
+        delete obj[oldKey];
+      } else {
+        obj[key] = replaceKeysInObj(obj[key], oldKey, newKey);
+      }
+    } else if (key === oldKey) {
+      obj[newKey] = obj[oldKey];
+      delete obj[oldKey];
+    }
+  }
+
+  return obj;
 };
 
 // 25. Get the first n Fibonacci numbers. In the Fibonacci sequence, each subsequent
@@ -375,6 +391,19 @@ var replaceKeysInObj = function(obj, oldKey, newKey) {
 // fibonacci(5); // [0,1,1,2,3,5]
 // Note: The 0 is not counted.
 var fibonacci = function(n) {
+
+  if (n <= 0) {
+    return null;
+  } else if (n === 1) {
+    return [0,1];
+  } else {
+    var nth = [];
+    var previous = fibonacci(n - 1)
+    nth.push(previous[n - 1] + previous[n - 2])
+    
+    return previous.concat(nth);
+  }
+
 };
 
 // 26. Return the Fibonacci number located at index n of the Fibonacci sequence.
@@ -383,6 +412,17 @@ var fibonacci = function(n) {
 // nthFibo(7); // 13
 // nthFibo(3); // 2
 var nthFibo = function(n) {
+
+  if (n < 0) {
+    return null;
+  } else if (n === 0) {
+    return 0;
+  } else if (n === 1) {
+    return 1;
+  } else {
+    return nthFibo(n - 1) + nthFibo(n - 2);
+  }
+
 };
 
 // 27. Given an array of words, return a new array containing each word capitalized.
