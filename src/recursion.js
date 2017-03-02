@@ -581,13 +581,27 @@ var minimizeZeroes = function(array) {
 var alternateSign = function(array) {
   if (array.length === 1) {
     if (array[0] >= 0) {
-      return array[0];
+      return [array[0]];
     } else {
-      return array[0] * -1;
+      return [array[0] * -1];
     }
   }
 
-  return alternateSign(array.slice(0, array.length - 1)).concat(array[array.length - 1]);
+  if (array.length % 2 === 1) {
+    var front = alternateSign(array.slice(0, array.length - 1));
+    if (array[array.length - 1] >= 0) {
+      return front.concat([array[array.length - 1]]);
+    } else {
+      return front.concat([array[array.length - 1] * -1]);
+    }
+  } else {
+    var front = alternateSign(array.slice(0, array.length - 1));
+    if (array[array.length - 1] <= 0) {
+      return front.concat([array[array.length - 1]]);
+    } else {
+      return front.concat([array[array.length - 1] * -1]);
+    }
+  }
 };
 
 // 36. Given a string, return a string with digits converted to their word equivalent.
